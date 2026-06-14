@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>منصة التوظيف — دام القابضة</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,Arial,sans-serif;background:#F4F3EF;color:#1A1916;min-height:100vh}
+.pg{display:none}.pg.on{display:block}
+nav{background:#1A1916;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:sticky;top:0;z-index:99}
+.logo{width:32px;height:32px;background:#B08D3C;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff}
+.brand{display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:600}
+.role-pill{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:10px;padding:3px 10px;border-radius:20px}
+.nav-end{display:flex;align-items:center;gap:8px}
+.back-btn{background:rgba(255,255,255,.12);color:#fff;border:none;padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit;display:none}
+.av{width:28px;height:28px;border-radius:50%;background:#B08D3C;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none}
+.wrap{max-width:680px;margin:0 auto;padding:20px 14px}
+.wrap-lg{max-width:1050px;margin:0 auto;padding:20px 14px}
+.card{background:#fff;border:1px solid #E2E0D6;border-radius:10px;padding:18px;margin-bottom:12px}
+.sec{font-size:11px;font-weight:600;color:#6B6960;margin-bottom:11px;padding-bottom:8px;border-bottom:1px solid #E2E0D6}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.f label{font-size:11px;font-weight:500;color:#6B6960;display:block;margin-bottom:3px}
+.f input,.f select,.f textarea{font-size:13px;padding:8px 10px;border:1px solid #E2E0D6;border-radius:6px;background:#fff;color:#1A1916;font-family:inherit;width:100%;outline:none}
+.f textarea{min-height:56px;resize:vertical}
+.btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:inherit;width:100%;margin-top:6px}
+.btn-gold{background:#B08D3C;color:#fff}
+.btn-green{background:#136438;color:#fff}
+.btn-red{background:#8A1A1A;color:#fff}
+.btn-gray{background:#E2E0D6;color:#1A1916}
+.btn-wa{background:#25D366;color:#fff}
+.co-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.co-btn{background:#fff;border:1.5px solid #E2E0D6;border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;width:100%;font-family:inherit}
+.type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.type-btn{background:#fff;border:1.5px solid #E2E0D6;border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;width:100%;font-family:inherit}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.stat{background:#fff;border:1px solid #E2E0D6;border-radius:8px;padding:12px}
+.stat-n{font-size:22px;font-weight:700;line-height:1;margin-bottom:2px}
+.stat-l{font-size:10px;color:#6B6960}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:right;padding:8px 10px;border-bottom:1px solid #E2E0D6;font-size:11px;font-weight:600;color:#6B6960;background:#FAFAF6;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid #E2E0D6;vertical-align:middle}
+.dr{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #E2E0D6}
+.dr:last-child{border-bottom:none}
+.dl{color:#6B6960;font-size:11px;min-width:120px}
+.dv{color:#1A1916;flex:1;text-align:left;font-size:12px}
+.err{background:#FBE8E8;border:1px solid #E8AAAA;border-radius:6px;padding:8px;font-size:12px;color:#8A1A1A;margin-bottom:8px;display:none}
+.suc{text-align:center;padding:40px 20px}
+.wa-box{background:#E5F4EC;border:1px solid #A5D9BC;border-radius:8px;padding:11px;margin-bottom:10px}
+.wa-msg{font-size:11px;color:#136438;line-height:1.8;white-space:pre-wrap;word-break:break-all;font-family:monospace}
+.empty{text-align:center;padding:28px;color:#6B6960;font-size:12px}
+.notif{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#1A1916;color:#fff;padding:8px 18px;border-radius:8px;font-size:12px;z-index:999;display:none}
+.user-info{background:#F8F2E3;border:1px solid #DFC98A;border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#B08D3C}
+@media(max-width:600px){.g2,.co-grid,.type-grid,.stats{grid-template-columns:1fr 1fr}.wrap,.wrap-lg{padding:12px 10px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand"><div class="logo">د</div>منصة التوظيف — دام القابضة</div>
+  <div class="nav-end">
+    <span class="role-pill" id="nav-role"></span>
+    <button class="back-btn" id="nav-back" onclick="goBack()">← رجوع</button>
+    <button class="av" id="nav-av" onclick="logout()" title="خروج">خ</button>
+  </div>
+</nav>
+
+<!-- LOGIN -->
+<div class="pg on" id="pg-login">
+<div style="min-height:100vh;background:#1A1916;display:flex;align-items:center;justify-content:center;padding:16px">
+  <div style="background:#fff;border-radius:14px;padding:32px;width:100%;max-width:380px;text-align:center">
+    <div style="width:60px;height:60px;background:#B08D3C;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#fff;margin:0 auto 16px">د</div>
+    <div style="font-size:20px;font-weight:700;margin-bottom:4px">منصة التوظيف</div>
+    <div style="font-size:12px;color:#6B6960;margin-bottom:24px;line-height:1.7">مجموعة دام القابضة<br>أدخل بيانات دخولك</div>
+    <div class="f" style="text-align:right;margin-bottom:10px">
+      <label>الإيميل</label>
+      <input id="li-email" type="email" placeholder="name@daamco.sa">
+    </div>
+    <div class="f" style="text-align:right;margin-bottom:12px">
+      <label>كلمة المرور</label>
+      <input id="li-pass" type="password" placeholder="••••••••">
+    </div>
+    <div class="err" id="li-err">الإيميل أو كلمة المرور غير صحيحة</div>
+    <button class="btn btn-gold" onclick="doLogin()">دخول ←</button>
+    <div style="margin-top:14px;font-size:11px;color:#6B6960">للدعم: s.aldweesh@daamco.sa</div>
+  </div>
+</div>
+</div>
+
+<!-- FORM: مدير الإدارة -->
+<div class="pg" id="pg-form">
+<div class="wrap">
+  <div class="user-info" id="form-user-info"></div>
+  <div class="card">
+    <div class="sec">🏢 اختر الشركة *</div>
+    <div class="co-grid">
+      <button class="co-btn" id="co-daam"    onclick="pickCo('daam','دام القابضة','👑')">   <div style="font-size:18px">👑</div><div style="font-size:10px;font-weight:600">دام القابضة</div></button>
+      <button class="co-btn" id="co-rasf"    onclick="pickCo('rasf','رصف','🏗️')">           <div style="font-size:18px">🏗️</div><div style="font-size:10px;font-weight:600">رصف</div></button>
+      <button class="co-btn" id="co-arabyat" onclick="pickCo('arabyat','العربات الفاخرة','🚗')"><div style="font-size:18px">🚗</div><div style="font-size:10px;font-weight:600">العربات الفاخرة</div></button>
+      <button class="co-btn" id="co-anawan"  onclick="pickCo('anawan','عناوان الضيافة','🏨')"><div style="font-size:18px">🏨</div><div style="font-size:10px;font-weight:600">عناوان الضيافة</div></button>
+      <button class="co-btn" id="co-shatiba" onclick="pickCo('shatiba','شاطبة للمقاولات','🏚️')"><div style="font-size:18px">🏚️</div><div style="font-size:10px;font-weight:600">شاطبة</div></button>
+      <button class="co-btn" id="co-mrkh"    onclick="pickCo('mrkh','مرخ للوجبات','🍽️')">   <div style="font-size:18px">🍽️</div><div style="font-size:10px;font-weight:600">مرخ للوجبات</div></button>
+      <button class="co-btn" id="co-maaqid"  onclick="pickCo('maaqid','معاقد للمقاولات','🔧')"><div style="font-size:18px">🔧</div><div style="font-size:10px;font-weight:600">معاقد</div></button>
+      <button class="co-btn" id="co-manazil" onclick="pickCo('manazil','المنازل','🏠')">      <div style="font-size:18px">🏠</div><div style="font-size:10px;font-weight:600">المنازل</div></button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="sec">📌 نوع الطلب *</div>
+    <div class="type-grid">
+      <button class="type-btn" id="tt-new"     onclick="pickType('new','وظيفة جديدة')">    <div style="font-size:18px">🆕</div><div style="font-size:10px;font-weight:600">وظيفة جديدة</div></button>
+      <button class="type-btn" id="tt-replace" onclick="pickType('replace','استبدال موظف')"><div style="font-size:18px">🔄</div><div style="font-size:10px;font-weight:600">استبدال موظف</div></button>
+      <button class="type-btn" id="tt-extra"   onclick="pickType('extra','زيادة احتياج')">  <div style="font-size:18px">➕</div><div style="font-size:10px;font-weight:600">زيادة احتياج</div></button>
+      <button class="type-btn" id="tt-temp"    onclick="pickType('temp','مؤقت/موسمي')">    <div style="font-size:18px">⏳</div><div style="font-size:10px;font-weight:600">مؤقت/موسمي</div></button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="sec">📄 بيانات الوظيفة</div>
+    <div class="g2">
+      <div class="f"><label>المسمى الوظيفي *</label><input id="f-title" placeholder="محاسب أول"></div>
+      <div class="f"><label>الإدارة *</label><input id="f-dept" placeholder="الإدارة المالية"></div>
+      <div class="f"><label>عدد الشواغر</label><input id="f-count" type="number" min="1" value="1"></div>
+      <div class="f"><label>الراتب المتوقع</label><input id="f-salary" placeholder="8,000 ريال"></div>
+      <div class="f"><label>موقع العمل</label><select id="f-loc"><option>الرياض</option><option>جدة</option><option>الدمام</option><option>مكة</option><option>المدينة</option><option>أخرى</option></select></div>
+      <div class="f"><label>المؤهل والخبرة</label><select id="f-edu"><option>بكالوريوس + 3 سنوات</option><option>بكالوريوس + 5 سنوات</option><option>دبلوم</option><option>ماجستير</option><option>أي مؤهل</option></select></div>
+      <div class="f"><label>السبب</label><select id="f-reason"><option>توسع في الأعمال</option><option>استقالة موظف</option><option>زيادة الأعباء</option><option>قسم جديد</option><option>نقل داخلي</option></select></div>
+      <div class="f"><label>في الميزانية؟</label><select id="f-budget"><option>نعم — معتمدة</option><option>لا — تحتاج اعتماد</option><option>جزئياً</option></select></div>
+    </div>
+    <div class="f" style="margin-bottom:10px"><label>المهام الرئيسية</label><textarea id="f-tasks" placeholder="أبرز المهام..."></textarea></div>
+    <div class="f" style="margin-bottom:10px"><label>أثر عدم التوظيف *</label><textarea id="f-impact" placeholder="ما الأثر على العمل؟"></textarea></div>
+    <div class="f"><label>ملاحظات</label><textarea id="f-notes" placeholder="أي معلومات إضافية..."></textarea></div>
+  </div>
+  <div class="err" id="form-err">يرجى تعبئة: الشركة، نوع الطلب، المسمى، الإدارة، الأثر.</div>
+  <button class="btn btn-gold" onclick="submitForm()">📨 إرسال الطلب للموارد البشرية</button>
+</div>
+</div>
+
+<!-- SUCCESS -->
+<div class="pg" id="pg-ok">
+<div class="wrap"><div class="suc">
+  <div style="font-size:50px;margin-bottom:12px">📨</div>
+  <div style="font-size:17px;font-weight:700;margin-bottom:6px">وصل طلبك بنجاح!</div>
+  <div style="font-size:12px;color:#6B6960;margin-bottom:16px">سيتواصل معك مسؤول الموارد البشرية قريباً</div>
+  <div style="background:#E5F4EC;border:1px solid #A5D9BC;border-radius:8px;padding:10px;display:inline-block;font-size:12px;color:#136438;margin-bottom:16px">رقم طلبك: <strong id="ok-id"></strong></div><br>
+  <button class="btn btn-gray" style="width:auto;padding:8px 20px" onclick="goTo('form')">📋 طلب جديد</button>
+</div></div>
+</div>
+
+<!-- DASHBOARD HR -->
+<div class="pg" id="pg-dash">
+<div class="wrap-lg">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+    <div><div style="font-size:17px;font-weight:700">داشبورد التوظيف</div><div style="font-size:11px;color:#6B6960" id="dash-date"></div></div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap">
+      <button class="btn btn-wa" style="width:auto;padding:7px 14px" onclick="goTo('wa')">📲 أرسل رابط</button>
+      <button class="btn btn-gold" style="width:auto;padding:7px 14px" onclick="goTo('cands')">👥 المرشحون</button>
+    </div>
+  </div>
+  <div class="stats" id="dash-stats"></div>
+  <div class="card" style="margin-bottom:12px"><div class="sec">🏢 الطلبات حسب الشركة</div><div id="co-dash" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:7px"></div></div>
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:7px">
+      <div class="sec" style="margin:0;border:none;padding:0">📋 الطلبات</div>
+      <div id="dash-filters" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+    </div>
+    <div class="tbl"><table><thead><tr><th>رقم</th><th>المسمى</th><th>الشركة</th><th>الإدارة</th><th>مقدم الطلب</th><th>الحالة</th><th>التاريخ</th><th>إجراء</th></tr></thead><tbody id="req-tbody"></tbody></table></div>
+  </div>
+</div>
+</div>
+
+<!-- DETAIL -->
+<div class="pg" id="pg-detail">
+<div class="wrap">
+  <div class="card"><div class="sec" id="det-title">تفاصيل الطلب</div><div id="det-body"></div></div>
+  <div class="card" id="det-fin-card" style="display:none">
+    <div class="sec">📲 إرسال للإدارة المالية</div>
+    <div class="wa-box"><div class="wa-msg" id="det-wa"></div></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-gray" style="width:auto;padding:6px 12px" onclick="copyMsg('det-wa')">📋 نسخ</button>
+      <button class="btn btn-wa" style="width:auto;padding:6px 12px" onclick="openWAmsg('det-wa')">📲 واتساب</button>
+    </div>
+  </div>
+  <div class="card"><div class="sec">تحديث الحالة</div><div id="det-status-btns" style="display:flex;gap:7px;flex-wrap:wrap;align-items:center"></div></div>
+  <div class="card"><div class="sec">🕐 السجل</div><div id="det-log"></div></div>
+</div>
+</div>
+
+<!-- FINANCE -->
+<div class="pg" id="pg-fin"><div class="wrap"><div id="fin-list"></div></div></div>
+
+<!-- FIN DETAIL -->
+<div class="pg" id="pg-fin-det">
+<div class="wrap">
+  <div class="card"><div class="sec" id="fd-title">اعتماد الطلب</div><div id="fd-body"></div></div>
+  <div class="card">
+    <div class="f" style="margin-bottom:10px"><label>ملاحظات المالية</label><textarea id="fin-notes" placeholder="أي ملاحظات..."></textarea></div>
+    <div class="f"><label>اسم المعتمد</label><input id="fin-name" readonly style="background:#F4F3EF"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <button class="btn btn-red" onclick="finDecide(false)">❌ رفض</button>
+    <button class="btn btn-green" onclick="finDecide(true)">✅ اعتماد</button>
+  </div>
+</div>
+</div>
+
+<!-- WA -->
+<div class="pg" id="pg-wa">
+<div class="wrap">
+  <div class="card">
+    <div class="sec">📲 إرسال رابط النموذج للمدراء</div>
+    <div class="f" style="margin-bottom:10px"><label>ملاحظة إضافية</label><input id="wa-note" placeholder="اختياري" oninput="refreshWA()"></div>
+    <div class="wa-box"><div class="wa-msg" id="wa-prev"></div></div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn btn-gray" style="width:auto;padding:7px 14px" onclick="copyMsg('wa-prev')">📋 نسخ</button>
+      <button class="btn btn-wa" style="width:auto;padding:7px 14px" onclick="openWAmsg('wa-prev')">📲 واتساب</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="sec">🔑 بيانات دخول المستخدمين</div>
+    <div style="font-size:12px;line-height:2;color:#1A1916">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:11px;font-weight:600;color:#6B6960;padding-bottom:6px;border-bottom:1px solid #E2E0D6;margin-bottom:8px"><span>الاسم</span><span>الإيميل</span><span>كلمة المرور</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:6px 0;border-bottom:1px solid #E2E0D6"><span>أيمن رفعت</span><span style="font-family:monospace;font-size:11px">s.alghannam@daamco.sa</span><span style="font-family:monospace">Daam@2026</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:6px 0;border-bottom:1px solid #E2E0D6"><span>فرحان أحمد</span><span style="font-family:monospace;font-size:11px">hr@daamco.sa</span><span style="font-family:monospace">Daam@2026</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:6px 0"><span>سليمان الدويش</span><span style="font-family:monospace;font-size:11px">s.aldweesh@daamco.sa</span><span style="font-family:monospace">Daam@2026</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- CANDIDATES -->
+<div class="pg" id="pg-cands">
+<div class="wrap-lg">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+    <div style="font-size:17px;font-weight:700">بنك المرشحين</div>
+    <button class="btn btn-gold" style="width:auto;padding:7px 14px" onclick="toggleCandForm()">+ إضافة مرشح</button>
+  </div>
+  <div class="card" id="cand-form-card" style="display:none">
+    <div class="sec">إضافة مرشح جديد</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px">
+      <div class="f"><label>الاسم *</label><input id="c-name"></div>
+      <div class="f"><label>الجوال *</label><input id="c-phone"></div>
+      <div class="f"><label>التخصص</label><input id="c-major"></div>
+      <div class="f"><label>الجنسية</label><select id="c-nat"><option>سعودي</option><option>غير سعودي</option></select></div>
+      <div class="f"><label>المدينة</label><select id="c-city"><option>الرياض</option><option>جدة</option><option>الدمام</option><option>مكة</option><option>المدينة</option><option>أخرى</option></select></div>
+      <div class="f"><label>الخبرة</label><select id="c-exp"><option>أقل من سنة</option><option>1-3 سنوات</option><option>3-5 سنوات</option><option>5-10 سنوات</option><option>+10 سنوات</option></select></div>
+      <div class="f"><label>الوظيفة المستهدفة</label><input id="c-target"></div>
+      <div class="f"><label>المصدر</label><select id="c-src"><option>لينكدإن</option><option>واتساب</option><option>إحالة</option><option>موقع الشركة</option><option>جهة خارجية</option></select></div>
+      <div class="f"><label>الحالة</label><select id="c-st"><option>جديد</option><option>تحت الدراسة</option><option>مقابلة أولى</option><option>مقابلة نهائية</option><option>تم التوظيف</option><option>غير مناسب</option><option>احتياط</option></select></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-gold" style="width:auto;padding:8px 16px" onclick="saveCand()">حفظ</button>
+      <button class="btn btn-gray" style="width:auto;padding:8px 16px" onclick="toggleCandForm()">إلغاء</button>
+    </div>
+  </div>
+  <div class="card"><div class="tbl"><table><thead><tr><th>الاسم</th><th>التخصص</th><th>الخبرة</th><th>الجنسية</th><th>المدينة</th><th>الوظيفة</th><th>المصدر</th><th>الحالة</th></tr></thead><tbody id="cand-tbody"></tbody></table></div></div>
+</div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ===== USERS =====
+var USERS={
+  's.alghannam@daamco.sa':{pass:'Daam@2026',name:'أيمن رفعت',role:'manager',dept:'الإدارة المالية',co:'دام القابضة'},
+  'hr@daamco.sa':          {pass:'Daam@2026',name:'فرحان أحمد',role:'finance',dept:'الإدارة المالية'},
+  's.aldweesh@daamco.sa':  {pass:'Daam@2026',name:'سليمان الدويش',role:'hr',dept:'الموارد البشرية'}
+};
+
+var SK='daam_v6';
+var DB={reqs:[],cands:[]};
+var curUser=null,curDetId='',curFinId='',selCoId='',selCoName='',selCoIcon='',selTypeId='',selTypeLabel='',filterCo='all';
+var STS=[{id:'received',lb:'تم الاستلام',c:'#174E88'},{id:'fin_wait',lb:'بانتظار المالية',c:'#8A4E0C'},{id:'approved',lb:'معتمد',c:'#136438'},{id:'searching',lb:'جاري البحث',c:'#3E1A7A'},{id:'shortlist',lb:'ترشيح مرشحين',c:'#3E1A7A'},{id:'int1',lb:'مقابلة أولى',c:'#3E1A7A'},{id:'int2',lb:'مقابلة فنية',c:'#3E1A7A'},{id:'offer',lb:'عرض وظيفي',c:'#B08D3C'},{id:'hired',lb:'تم التوظيف',c:'#136438'},{id:'closed',lb:'مغلق/مرفوض',c:'#666'}];
+
+function loadDB(){try{var d=localStorage.getItem(SK);if(d)DB=JSON.parse(d);}catch(e){DB={reqs:[],cands:[]};}}
+function saveDB(){try{localStorage.setItem(SK,JSON.stringify(DB));}catch(e){}}
+function gv(id){var e=document.getElementById(id);return e?e.value:'';}
+function today(){return new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'short',day:'numeric'});}
+function uid(){return'JR-'+Date.now().toString().slice(-6);}
+function getSt(id){for(var i=0;i<STS.length;i++)if(STS[i].id===id)return STS[i];return STS[0];}
+function notify(m){var n=document.getElementById('notif');n.textContent=m;n.style.display='block';setTimeout(function(){n.style.display='none';},2000);}
+
+function goTo(pg){
+  var all=document.querySelectorAll('.pg');
+  for(var i=0;i<all.length;i++){all[i].style.display='none';all[i].classList.remove('on');}
+  var el=document.getElementById('pg-'+pg);
+  if(el){el.style.display='block';el.classList.add('on');}
+  var bb=document.getElementById('nav-back');
+  bb.style.display=['detail','fin-det','wa','cands','ok'].indexOf(pg)>=0?'block':'none';
+  if(pg==='dash')renderDash();
+  if(pg==='fin')renderFinList();
+  if(pg==='wa')refreshWA();
+  if(pg==='cands')renderCands();
+  window.scrollTo(0,0);
+}
+
+function goBack(){
+  var cur='';
+  var all=document.querySelectorAll('.pg');
+  for(var i=0;i<all.length;i++)if(all[i].style.display==='block'){cur=all[i].id.replace('pg-','');break;}
+  if(cur==='detail'||cur==='wa'||cur==='cands')goTo('dash');
+  else if(cur==='fin-det')goTo('fin');
+  else if(cur==='ok')goTo('form');
+  else if(curUser&&curUser.role==='hr')goTo('dash');
+  else if(curUser&&curUser.role==='finance')goTo('fin');
+}
+
+function logout(){curUser=null;goTo('login');}
+
+function doLogin(){
+  var email=document.getElementById('li-email').value.trim().toLowerCase();
+  var pass=document.getElementById('li-pass').value;
+  var user=USERS[email];
+  if(!user||user.pass!==pass){document.getElementById('li-err').style.display='block';return;}
+  document.getElementById('li-err').style.display='none';
+  curUser={email:email,name:user.name,role:user.role,dept:user.dept,co:user.co||''};
+  document.getElementById('nav-av').textContent=user.name.charAt(0);
+  var roleLabel={hr:'الموارد البشرية',manager:'مدير الإدارة',finance:'الإدارة المالية'};
+  document.getElementById('nav-role').textContent=roleLabel[user.role]||'';
+  loadDB();
+  if(user.role==='hr')goTo('dash');
+  else if(user.role==='manager'){
+    document.getElementById('form-user-info').innerHTML='مرحباً <strong>'+user.name+'</strong> | '+user.dept+' | '+(user.co||'');
+    goTo('form');
+  }
+  else if(user.role==='finance'){
+    document.getElementById('fin-name').value=user.name;
+    goTo('fin');
+  }
+}
+
+function pickCo(id,name,icon){
+  selCoId=id;selCoName=name;selCoIcon=icon;
+  document.querySelectorAll('.co-btn').forEach(function(b){b.style.borderColor='#E2E0D6';b.style.background='#fff';});
+  var el=document.getElementById('co-'+id);
+  if(el){el.style.borderColor='#B08D3C';el.style.background='#F8F2E3';}
+}
+
+function pickType(id,label){
+  selTypeId=id;selTypeLabel=label;
+  document.querySelectorAll('.type-btn').forEach(function(b){b.style.borderColor='#E2E0D6';b.style.background='#fff';});
+  var el=document.getElementById('tt-'+id);
+  if(el){el.style.borderColor='#B08D3C';el.style.background='#F8F2E3';}
+}
+
+function submitForm(){
+  if(!selCoId||!selTypeId||!gv('f-title')||!gv('f-dept')||!gv('f-impact')){
+    document.getElementById('form-err').style.display='block';return;
+  }
+  document.getElementById('form-err').style.display='none';
+  var id=uid();
+  var rec={id:id,coId:selCoId,coName:selCoName,coIcon:selCoIcon,reqType:selTypeId,reqTypeLabel:selTypeLabel,status:'received',time:today(),title:gv('f-title'),dept:gv('f-dept'),count:gv('f-count'),salary:gv('f-salary'),location:gv('f-loc'),edu:gv('f-edu'),reason:gv('f-reason'),budget:gv('f-budget'),tasks:gv('f-tasks'),impact:gv('f-impact'),notes:gv('f-notes'),sub:curUser?curUser.name:'',email:curUser?curUser.email:'',log:[{t:'تم استلام الطلب',s:(curUser?curUser.name:'')+' — '+today()}]};
+  loadDB();DB.reqs.push(rec);saveDB();
+  document.getElementById('ok-id').textContent=id;
+  // reset form
+  selCoId='';selTypeId='';
+  document.querySelectorAll('.co-btn').forEach(function(b){b.style.borderColor='#E2E0D6';b.style.background='#fff';});
+  document.querySelectorAll('.type-btn').forEach(function(b){b.style.borderColor='#E2E0D6';b.style.background='#fff';});
+  ['f-title','f-dept','f-salary','f-tasks','f-impact','f-notes'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});
+  goTo('ok');
+}
+
+var COS_MAP={daam:{n:'دام القابضة',i:'👑'},rasf:{n:'رصف',i:'🏗️'},arabyat:{n:'العربات الفاخرة',i:'🚗'},anawan:{n:'عناوان الضيافة',i:'🏨'},shatiba:{n:'شاطبة',i:'🏚️'},mrkh:{n:'مرخ للوجبات',i:'🍽️'},maaqid:{n:'معاقد',i:'🔧'},manazil:{n:'المنازل',i:'🏠'}};
+
+function renderDash(){
+  loadDB();
+  document.getElementById('dash-date').textContent=today();
+  var R=DB.reqs||[];
+  var pend=R.filter(function(r){return r.status==='received'||r.status==='fin_wait';}).length;
+  var prog=R.filter(function(r){return['approved','searching','shortlist','int1','int2','offer'].indexOf(r.status)>=0;}).length;
+  document.getElementById('dash-stats').innerHTML=
+    '<div class="stat"><div class="stat-n">'+R.length+'</div><div class="stat-l">إجمالي</div></div>'+
+    '<div class="stat"><div class="stat-n" style="color:#8A4E0C">'+pend+'</div><div class="stat-l">بانتظار الإجراء</div></div>'+
+    '<div class="stat"><div class="stat-n" style="color:#174E88">'+prog+'</div><div class="stat-l">جاري التوظيف</div></div>'+
+    '<div class="stat"><div class="stat-n" style="color:#136438">'+R.filter(function(r){return r.status==='hired';}).length+'</div><div class="stat-l">تم التوظيف</div></div>'+
+    '<div class="stat"><div class="stat-n" style="color:#3E1A7A">'+(DB.cands||[]).length+'</div><div class="stat-l">المرشحون</div></div>';
+  var coH='';
+  for(var k in COS_MAP){var co=COS_MAP[k];var n=R.filter(function(r){return r.coId===k;}).length;coH+='<button onclick="setFilter(\''+k+'\')" style="background:'+(filterCo===k?'#F8F2E3':'#F4F3EF')+';border:1px solid '+(filterCo===k?'#B08D3C':'#E2E0D6')+';border-radius:8px;padding:8px 9px;display:flex;align-items:center;gap:6px;cursor:pointer;font-family:inherit;text-align:right"><span>'+co.i+'</span><div><div style="font-size:11px;font-weight:600">'+co.n+'</div><div style="font-size:9px;color:#6B6960">'+n+' طلب</div></div></button>';}
+  document.getElementById('co-dash').innerHTML=coH;
+  var fH='<button onclick="setFilter(\'all\')" style="padding:4px 12px;border-radius:20px;border:1px solid #E2E0D6;background:'+(filterCo==='all'?'#1A1916':'#fff')+';color:'+(filterCo==='all'?'#fff':'#6B6960')+';font-size:11px;cursor:pointer;font-family:inherit">الكل</button>';
+  var cosK=Object.keys(COS_MAP);for(var j=0;j<cosK.length;j++){var ck=cosK[j];if(R.some(function(r){return r.coId===ck;})){var cv=COS_MAP[ck];fH+='<button onclick="setFilter(\''+ck+'\')" style="padding:4px 12px;border-radius:20px;border:1px solid #E2E0D6;background:'+(filterCo===ck?'#1A1916':'#fff')+';color:'+(filterCo===ck?'#fff':'#6B6960')+';font-size:11px;cursor:pointer;font-family:inherit">'+cv.i+' '+cv.n+'</button>';}}
+  document.getElementById('dash-filters').innerHTML=fH;
+  var filtered=filterCo==='all'?R:R.filter(function(r){return r.coId===filterCo;});
+  var tbody=document.getElementById('req-tbody');
+  if(!filtered.length){tbody.innerHTML='<tr><td colspan="8"><div class="empty">📂 لا توجد طلبات بعد — أرسل رابطاً لمدير إدارة للبدء</div></td></tr>';return;}
+  var rows='';var rev=[].concat(filtered).reverse();
+  for(var m=0;m<rev.length;m++){var r=rev[m];var st=getSt(r.status);
+    rows+='<tr><td style="font-family:monospace;font-size:10px;color:#6B6960">'+r.id+'</td><td style="font-weight:500">'+r.title+'</td><td>'+r.coIcon+' '+r.coName+'</td><td style="color:#6B6960">'+r.dept+'</td><td style="color:#6B6960;font-size:11px">'+(r.sub||'—')+'</td><td><span style="background:'+st.c+'18;color:'+st.c+';border:1px solid '+st.c+'40;border-radius:20px;font-size:10px;padding:2px 8px;font-weight:500;white-space:nowrap">'+st.lb+'</span></td><td style="font-size:10px;color:#6B6960">'+r.time+'</td><td><button onclick="openDetail(\''+r.id+'\')" style="padding:4px 10px;border-radius:6px;border:1px solid #E2E0D6;background:#fff;cursor:pointer;font-size:11px;font-family:inherit">👁 عرض</button></td></tr>';
+  }
+  tbody.innerHTML=rows;
+}
+function setFilter(co){filterCo=co;renderDash();}
+
+function openDetail(id){
+  loadDB();var r=null;for(var i=0;i<DB.reqs.length;i++)if(DB.reqs[i].id===id){r=DB.reqs[i];break;}
+  if(!r)return;curDetId=id;
+  document.getElementById('det-title').textContent=r.title+' — '+r.coName;
+  var rows=[['الشركة',r.coIcon+' '+r.coName],['الإدارة',r.dept],['المسمى',r.title],['نوع الطلب',r.reqTypeLabel||'—'],['الشواغر',r.count],['الراتب',r.salary||'—'],['في الميزانية',r.budget],['المؤهل',r.edu],['الأثر',r.impact],['مقدم الطلب',r.sub||'—'],['التاريخ',r.time]];
+  if(r.finName)rows.push(['اعتماد المالية',r.finName]);
+  var bH='';for(var k=0;k<rows.length;k++)bH+='<div class="dr"><span class="dl">'+rows[k][0]+'</span><span class="dv">'+(rows[k][1]||'—')+'</span></div>';
+  document.getElementById('det-body').innerHTML=bH;
+  var ci=0;for(var s=0;s<STS.length;s++)if(STS[s].id===r.status){ci=s;break;}
+  var stBtns='<span style="font-size:11px;color:#6B6960">تحديث:</span>';
+  for(var n=ci+1;n<Math.min(ci+5,STS.length);n++){stBtns+='<button onclick="chSt(\''+STS[n].id+'\')" style="padding:5px 11px;border-radius:6px;border:1px solid #E2E0D6;background:#fff;cursor:pointer;font-size:11px;font-family:inherit">'+STS[n].lb+'</button>';}
+  document.getElementById('det-status-btns').innerHTML=stBtns;
+  var fc=document.getElementById('det-fin-card');
+  if(r.status==='received'){
+    document.getElementById('det-wa').textContent='مرحباً،\n\nيرجى مراجعة طلب التوظيف:\n\nالوظيفة: '+r.title+'\nالشركة: '+r.coName+'\nالإدارة: '+r.dept+'\nالشواغر: '+r.count+'\nالراتب: '+(r.salary||'—')+'\n\nالرقم: '+r.id+'\nمقدم الطلب: '+(r.sub||'—')+'\n\nيرجى تسجيل الدخول للنظام واعتماد الطلب:\n'+window.location.href+'\n\nبيانات الدخول:\nالإيميل: hr@daamco.sa\nكلمة المرور: Daam@2026\n\nشكراً،\nالموارد البشرية — دام القابضة';
+    fc.style.display='block';
+  } else {fc.style.display='none';}
+  var logH='';var log=r.log||[];for(var l=0;l<log.length;l++)logH+='<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #E2E0D6"><div style="width:20px;height:20px;border-radius:50%;background:#EAF1FB;color:#174E88;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0">✓</div><div><div style="font-size:12px;font-weight:500">'+log[l].t+'</div><div style="font-size:10px;color:#6B6960">'+log[l].s+'</div></div></div>';
+  document.getElementById('det-log').innerHTML=logH||'<div style="color:#6B6960;font-size:12px;padding:8px 0">لا توجد سجلات</div>';
+  goTo('detail');
+}
+function chSt(ns){var st=getSt(ns);loadDB();for(var i=0;i<DB.reqs.length;i++){if(DB.reqs[i].id===curDetId){DB.reqs[i].status=ns;DB.reqs[i].log=DB.reqs[i].log||[];DB.reqs[i].log.push({t:'تحديث: '+st.lb,s:(curUser?curUser.name:'')+' — '+today()});break;}}saveDB();notify('تم التحديث: '+st.lb);openDetail(curDetId);}
+
+function renderFinList(){
+  loadDB();var pend=(DB.reqs||[]).filter(function(r){return r.status==='received'||r.status==='fin_wait';});var done=(DB.reqs||[]).filter(function(r){return r.status==='approved'||r.status==='closed';});
+  var html='';
+  if(!pend.length&&!done.length){html='<div class="card"><div class="empty">📂 لا توجد طلبات بانتظار اعتمادك</div></div>';}
+  else{
+    if(pend.length){html+='<div class="card"><div class="sec">⏳ بانتظار الاعتماد ('+pend.length+')</div>';for(var i=0;i<pend.length;i++){var r=pend[i];html+='<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #E2E0D6;gap:8px;flex-wrap:wrap"><div><div style="font-weight:500;font-size:13px">'+r.coIcon+' '+r.title+'</div><div style="font-size:10px;color:#6B6960">'+r.coName+' — '+r.dept+' — '+(r.sub||'—')+'</div></div><button onclick="openFinDet(\''+r.id+'\')" style="padding:5px 12px;border-radius:6px;background:#B08D3C;color:#fff;border:none;cursor:pointer;font-size:11px;font-family:inherit">مراجعة واعتماد</button></div>';}html+='</div>';}
+    if(done.length){html+='<div class="card"><div class="sec">✅ تم البت بها ('+done.length+')</div>';for(var j=0;j<done.length;j++){var rd=done[j];html+='<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid #E2E0D6"><span style="font-size:12px">'+rd.coIcon+' '+rd.title+' <span style="color:#6B6960;font-size:10px">— '+rd.coName+'</span></span><span style="font-size:10px;padding:2px 8px;border-radius:20px;background:'+(rd.status==='approved'?'#E5F4EC':'#F4F3EF')+';color:'+(rd.status==='approved'?'#136438':'#666')+'">'+(rd.status==='approved'?'معتمد':'مرفوض')+'</span></div>';}html+='</div>';}
+  }
+  document.getElementById('fin-list').innerHTML=html;
+}
+function openFinDet(id){loadDB();var r=null;for(var i=0;i<DB.reqs.length;i++)if(DB.reqs[i].id===id){r=DB.reqs[i];break;}if(!r)return;curFinId=id;document.getElementById('fd-title').textContent=r.coIcon+' '+r.title+' — '+r.coName;var rows=[['الشركة',r.coIcon+' '+r.coName],['الإدارة',r.dept],['المسمى',r.title],['الشواغر',r.count],['الراتب',r.salary||'—'],['في الميزانية',r.budget],['الأثر',r.impact],['مقدم الطلب',r.sub||'—']];var bH='';for(var k=0;k<rows.length;k++)bH+='<div class="dr"><span class="dl">'+rows[k][0]+'</span><span class="dv">'+(rows[k][1]||'—')+'</span></div>';document.getElementById('fd-body').innerHTML=bH;if(curUser)document.getElementById('fin-name').value=curUser.name;document.getElementById('fin-notes').value='';goTo('fin-det');}
+function finDecide(ok){loadDB();for(var i=0;i<DB.reqs.length;i++){if(DB.reqs[i].id===curFinId){DB.reqs[i].status=ok?'approved':'closed';DB.reqs[i].finName=curUser?curUser.name:'';DB.reqs[i].finNotes=gv('fin-notes');DB.reqs[i].finTime=today();DB.reqs[i].log=DB.reqs[i].log||[];DB.reqs[i].log.push({t:'قرار المالية: '+(ok?'معتمد':'مرفوض'),s:(curUser?curUser.name:'')+' — '+today()});break;}}saveDB();notify(ok?'✅ تم الاعتماد':'❌ تم الرفض');goTo('fin');}
+
+function refreshWA(){var note=gv('wa-note');document.getElementById('wa-prev').textContent='مرحباً،\n\nيرجى تعبئة نموذج طلب الاحتياج الوظيفي:\n\n'+window.location.href+'\n\nبيانات الدخول:\nالإيميل: s.alghannam@daamco.sa\nكلمة المرور: Daam@2026'+(note?'\n\nملاحظة: '+note:'')+'\n\nشكراً،\nالموارد البشرية — دام القابضة';}
+function copyMsg(id){try{navigator.clipboard.writeText(document.getElementById(id).textContent).catch(function(){});}catch(e){}notify('تم النسخ');}
+function openWAmsg(id){window.open('https://wa.me/?text='+encodeURIComponent(document.getElementById(id).textContent),'_blank');}
+
+function toggleCandForm(){var c=document.getElementById('cand-form-card');c.style.display=c.style.display==='none'?'block':'none';}
+function saveCand(){var nm=gv('c-name').trim();var ph=gv('c-phone').trim();if(!nm||!ph){notify('يرجى إدخال الاسم والجوال');return;}loadDB();DB.cands=DB.cands||[];DB.cands.push({name:nm,phone:ph,major:gv('c-major'),nat:gv('c-nat'),city:gv('c-city'),exp:gv('c-exp'),target:gv('c-target'),source:gv('c-src'),status:gv('c-st'),added:today(),addedBy:curUser?curUser.name:''});saveDB();notify('✅ تم حفظ المرشح');toggleCandForm();renderCands();}
+function renderCands(){loadDB();var C=DB.cands||[];var tbody=document.getElementById('cand-tbody');if(!C.length){tbody.innerHTML='<tr><td colspan="8"><div class="empty">لا يوجد مرشحون بعد</div></td></tr>';return;}var h='';var rev=[].concat(C).reverse();for(var i=0;i<rev.length;i++){var c=rev[i];h+='<tr><td style="font-weight:500">'+c.name+'</td><td>'+(c.major||'—')+'</td><td>'+(c.exp||'—')+'</td><td>'+(c.nat||'—')+'</td><td>'+(c.city||'—')+'</td><td>'+(c.target||'—')+'</td><td>'+(c.source||'—')+'</td><td><span style="font-size:10px;padding:2px 8px;border-radius:20px;background:#EAF1FB;color:#174E88">'+c.status+'</span></td></tr>';}tbody.innerHTML=h;}
+
+loadDB();
+document.getElementById('li-email').addEventListener('keydown',function(e){if(e.keyCode===13)document.getElementById('li-pass').focus();});
+document.getElementById('li-pass').addEventListener('keydown',function(e){if(e.keyCode===13)doLogin();});
+</script>
+</body>
+</html>
