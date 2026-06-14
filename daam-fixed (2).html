@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>منصة التوظيف — مجموعة دام القابضة</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F3EF;--card:#fff;--border:#E2E0D6;--text:#1A1916;--muted:#6B6960;
+  --gold:#B08D3C;--gold-bg:#F8F2E3;--gold-bd:#DFC98A;
+  --blue:#174E88;--blue-bg:#EAF1FB;--blue-bd:#B5D0EF;
+  --green:#136438;--green-bg:#E5F4EC;--green-bd:#A5D9BC;
+  --amber:#8A4E0C;--amber-bg:#FDF2E0;--amber-bd:#EDCA7A;
+  --red:#8A1A1A;--red-bg:#FBEAEA;--red-bd:#E8AAAA;
+  --purple:#3E1A7A;--purple-bg:#F0EAF8;--purple-bd:#C8A8E8;
+  --r:10px;--r-sm:6px;--sh:0 1px 3px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.04);
+}
+body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
+
+/* NAV */
+.nav{background:var(--text);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:34px;height:34px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0}
+.brand-name{font-size:14px;font-weight:600;color:#fff}
+.brand-sub{font-size:11px;color:rgba(255,255,255,.45)}
+.nav-end{display:flex;align-items:center;gap:10px}
+.role-pill{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.15)}
+.av{width:30px;height:30px;border-radius:50%;background:var(--gold);color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer}
+
+/* LAYOUT */
+.pg{display:none}.pg.on{display:block}
+.wrap{max-width:1100px;margin:0 auto;padding:26px 18px}
+.wrap-sm{max-width:660px;margin:0 auto;padding:26px 18px}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;box-shadow:var(--sh);margin-bottom:14px}
+
+/* SECTION TITLE */
+.st{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.06em;padding-bottom:9px;border-bottom:1px solid var(--border);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+
+/* FORM */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;margin-bottom:13px}
+.fc{grid-column:1/-1}
+.f{display:flex;flex-direction:column;gap:4px}
+.f label{font-size:12px;font-weight:500;color:var(--muted)}
+.f input,.f select,.f textarea{font-size:13px;padding:8px 11px;border:1px solid var(--border);border-radius:var(--r-sm);background:#fff;color:var(--text);font-family:inherit;width:100%;transition:border-color .15s}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--gold)}
+.f textarea{min-height:68px;resize:vertical}
+.req{color:var(--red);font-size:9px;margin-right:2px}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:var(--r-sm);font-size:13px;font-weight:500;cursor:pointer;border:1px solid transparent;font-family:inherit;transition:all .15s;text-decoration:none}
+.btn-gold{background:var(--gold);color:#fff;border-color:var(--gold)}.btn-gold:hover{background:#9A7A30}
+.btn-out{background:transparent;color:var(--text);border-color:var(--border)}.btn-out:hover{background:var(--bg)}
+.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{background:#113C6E}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#0D4E2C}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#6E1414}
+.btn-wa{background:#25D366;color:#fff;border-color:#25D366}.btn-wa:hover{background:#1CB857}
+.btn-full{width:100%;justify-content:center;padding:11px}
+.btn-sm{padding:5px 11px;font-size:11px}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+.b-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
+.b-gold{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-bd)}
+.b-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.b-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)}
+.b-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.b-purple{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-bd)}
+.b-gray{background:#EFEDE6;color:#666;border:1px solid var(--border)}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:11px;margin-bottom:22px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
+.stat-n{font-size:26px;font-weight:700;line-height:1;margin-bottom:3px}
+.stat-l{font-size:11px;color:var(--muted)}
+
+/* TABLE */
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:right;padding:9px 12px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap;background:#FAFAF6}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#FAFAF6}
+
+/* COMPANY GRID */
+.co-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:14px}
+.co-card{border:1.5px solid var(--border);border-radius:var(--r);padding:13px 10px;text-align:center;cursor:pointer;background:#fff;transition:all .15s}
+.co-card:hover{border-color:var(--gold);background:var(--gold-bg)}
+.co-card.sel{border-color:var(--gold);background:var(--gold-bg);box-shadow:0 0 0 3px rgba(176,141,60,.15)}
+.co-ico{font-size:20px;margin-bottom:5px}
+.co-nm{font-size:11px;font-weight:600;margin-bottom:2px}
+.co-tp{font-size:10px;color:var(--muted)}
+
+/* ROLE GRID */
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:16px}
+.role-card{border:1.5px solid var(--border);border-radius:var(--r);padding:18px 14px;text-align:center;cursor:pointer;background:#fff;transition:all .15s}
+.role-card:hover{border-color:var(--blue);background:var(--blue-bg)}
+.role-ico{font-size:26px;margin-bottom:8px}
+.role-nm{font-size:13px;font-weight:600;margin-bottom:4px}
+.role-ds{font-size:11px;color:var(--muted);line-height:1.5}
+
+/* STEPPER */
+.stepper{display:flex;overflow-x:auto;padding-bottom:4px;margin-bottom:18px}
+.stp{flex:1;min-width:72px;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative}
+.stp:not(:last-child)::after{content:'';position:absolute;top:12px;left:0;width:50%;height:1.5px;background:var(--border)}
+.stp:not(:first-child)::before{content:'';position:absolute;top:12px;right:0;width:50%;height:1.5px;background:var(--border)}
+.stp.done::after,.stp.done::before,.stp.cur::before{background:var(--gold)}
+.stp-d{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;z-index:1;position:relative;color:var(--muted)}
+.stp.done .stp-d{background:var(--gold);border-color:var(--gold);color:#fff}
+.stp.cur .stp-d{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 0 0 3px var(--blue-bg)}
+.stp-l{font-size:9px;color:var(--muted);text-align:center;line-height:1.3;max-width:68px}
+.stp.cur .stp-l{color:var(--blue);font-weight:600}
+.stp.done .stp-l{color:var(--green)}
+
+/* TIMELINE */
+.tl{display:flex;flex-direction:column}
+.tl-row{display:flex;gap:11px;padding:7px 0;position:relative}
+.tl-row:not(:last-child)::after{content:'';position:absolute;right:13px;top:30px;bottom:0;width:1.5px;background:var(--border)}
+.tl-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;border:1px solid var(--border)}
+.tl-body{flex:1;padding-top:2px}
+.tl-ti{font-size:12px;font-weight:500}
+.tl-su{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* DETAIL ROW */
+.dr{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+.dr:last-child{border-bottom:none}
+.dl{color:var(--muted);font-size:11px;min-width:130px;flex-shrink:0}
+.dv{color:var(--text);flex:1;text-align:left;font-size:12px}
+
+/* WA BOX */
+.wa-box{background:var(--green-bg);border:1px solid var(--green-bd);border-radius:var(--r);padding:13px}
+.wa-msg{font-size:11px;color:var(--green);line-height:1.8;white-space:pre-wrap;word-break:break-all;font-family:monospace}
+
+/* PAGE HEADER */
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap}
+.ph-title{font-size:19px;font-weight:700}
+.ph-sub{font-size:12px;color:var(--muted);margin-top:3px}
+
+/* FILTERS */
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.fb{padding:5px 13px;border-radius:20px;border:1px solid var(--border);background:#fff;font-size:11px;cursor:pointer;font-family:inherit;color:var(--muted);transition:all .15s}
+.fb:hover,.fb.on{background:var(--text);color:#fff;border-color:var(--text)}
+
+/* SUCCESS */
+.suc{text-align:center;padding:44px 20px}
+
+/* EMPTY */
+.empty{text-align:center;padding:36px;color:var(--muted);font-size:13px}
+
+/* AI BOX */
+.ai-box{background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:var(--r);padding:13px;margin-top:10px}
+.ai-txt{font-size:12px;color:var(--blue);line-height:1.8;white-space:pre-wrap}
+
+/* NOTIFY */
+.notif{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:9px 20px;border-radius:8px;font-size:12px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+.notif.show{opacity:1}
+
+/* CANDIDATE TABLE */
+.c-tag{font-size:10px;padding:2px 7px;border-radius:4px;border:1px solid var(--border);color:var(--muted);margin:1px}
+
+@media(max-width:600px){
+  .co-grid{grid-template-columns:1fr 1fr}
+  .role-grid{grid-template-columns:1fr}
+  .g2,.g3{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .wrap,.wrap-sm{padding:14px 12px}
+  .nav{padding:0 12px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="pg on" id="pg-login">
+  <div style="min-height:100vh;background:var(--text);display:flex;align-items:center;justify-content:center;padding:20px">
+    <div style="background:#fff;border-radius:16px;padding:38px;width:100%;max-width:400px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.18)">
+      <div style="width:60px;height:60px;background:var(--gold);border-radius:14px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#fff">د</div>
+      <div style="font-size:20px;font-weight:700;margin-bottom:5px">منصة التوظيف</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:24px;line-height:1.7">مجموعة دام القابضة<br>أدخل إيميل الشركة للدخول</div>
+      <div class="f" style="text-align:right;margin-bottom:13px">
+        <label>إيميل الشركة</label>
+        <input id="login-email" type="email" placeholder="name@daamco.sa">
+      </div>
+      <div id="login-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-bd);border-radius:6px;padding:8px 11px;font-size:12px;color:var(--red);margin-bottom:11px;text-align:right">
+        ⚠️ يرجى استخدام إيميل الشركة (@daamco.sa)
+      </div>
+      <button class="btn btn-gold btn-full" type="button" onclick="(function(){var e=document.getElementById('login-email').value.trim();if(!e){document.getElementById('login-err').style.display='block';return;}document.getElementById('login-err').style.display='none';window._user=e;document.getElementById('nav-av').textContent=e.charAt(0).toUpperCase();document.getElementById('main-nav').style.display='block';var pgs=document.querySelectorAll('.pg');for(var i=0;i<pgs.length;i++)pgs[i].classList.remove('on');document.getElementById('pg-role').classList.add('on');})()">دخول ←</button>
+      <div style="margin-top:14px;font-size:11px;color:var(--muted)">للدعم: hr@daamco.sa</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV (hidden until login) -->
+<div id="main-nav" style="display:none">
+  <nav class="nav">
+    <div class="brand">
+      <div class="logo">د</div>
+      <div><div class="brand-name">منصة التوظيف</div><div class="brand-sub">مجموعة دام القابضة</div></div>
+    </div>
+    <div class="nav-end">
+      <span class="role-pill" id="nav-role">—</span>
+      <div class="av" id="nav-av" onclick="logout()" title="خروج">خ</div>
+    </div>
+  </nav>
+</div>
+
+<!-- ROLE SELECT -->
+<div class="pg" id="pg-role">
+  <div class="wrap-sm">
+    <div style="text-align:center;padding:22px 0 18px">
+      <div style="font-size:19px;font-weight:700;margin-bottom:5px">مرحباً 👋</div>
+      <div style="font-size:12px;color:var(--muted)">اختر دورك للمتابعة</div>
+    </div>
+    <div class="role-grid">
+      <div class="role-card" data-role="hr" onclick="setRole('hr')">
+        <div class="role-ico">🎯</div>
+        <div class="role-nm">الموارد البشرية</div>
+        <div class="role-ds">داشبورد كامل — إدارة جميع طلبات المجموعة</div>
+      </div>
+      <div class="role-card" data-role="manager" onclick="setRole('manager')">
+        <div class="role-ico">📋</div>
+        <div class="role-nm">مدير الإدارة</div>
+        <div class="role-ds">تقديم طلب فتح وظيفة جديدة</div>
+      </div>
+      <div class="role-card" data-role="finance" onclick="setRole('finance')">
+        <div class="role-ico">💰</div>
+        <div class="role-nm">الإدارة المالية</div>
+        <div class="role-ds">مراجعة واعتماد طلبات التوظيف</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD HR -->
+<div class="pg" id="pg-dash">
+  <div class="wrap">
+    <div class="ph">
+      <div><div class="ph-title">داشبورد التوظيف</div><div class="ph-sub" id="dash-date"></div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-wa btn-sm" onclick="goTo('wa-send')">📲 أرسل رابط لمدير</button>
+        <button class="btn btn-gold btn-sm" onclick="goTo('candidates')">👥 بنك المرشحين</button>
+        <button class="btn btn-out btn-sm" onclick="goTo('form')">+ طلب جديد</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="s0">0</div><div class="stat-l">إجمالي الطلبات</div></div>
+      <div class="stat"><div class="stat-n" style="color:var(--amber)" id="s1">0</div><div class="stat-l">بانتظار الإجراء</div></div>
+      <div class="stat"><div class="stat-n" style="color:var(--blue)" id="s2">0</div><div class="stat-l">جاري التوظيف</div></div>
+      <div class="stat"><div class="stat-n" style="color:var(--green)" id="s3">0</div><div class="stat-l">تم التوظيف</div></div>
+      <div class="stat"><div class="stat-n" style="color:var(--red)" id="s4">0</div><div class="stat-l">مغلق/مرفوض</div></div>
+      <div class="stat"><div class="stat-n" style="color:var(--purple)" id="s5">0</div><div class="stat-l">مرشحون في البنك</div></div>
+    </div>
+
+    <!-- شركات -->
+    <div class="card">
+      <div class="st">🏢 الطلبات حسب الشركة</div>
+      <div id="co-stat-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:9px"></div>
+    </div>
+
+    <!-- طلبات -->
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;flex-wrap:wrap;gap:8px">
+        <div class="st" style="margin:0;border:none;padding:0">📋 الطلبات</div>
+        <div class="filters" style="margin:0" id="dash-filters"></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>رقم</th><th>المسمى</th><th>الشركة</th><th>الإدارة</th><th>نوع الطلب</th><th>الحالة</th><th>التاريخ</th><th>إجراء</th></tr></thead>
+        <tbody id="req-tbody"></tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM: مدير الإدارة -->
+<div class="pg" id="pg-form">
+  <div class="wrap-sm">
+    <div class="ph">
+      <div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:3px">مجموعة دام القابضة</div>
+        <div class="ph-title">طلب فتح وظيفة</div>
+        <div class="ph-sub">ستصل للموارد البشرية فوراً بعد الإرسال</div>
+      </div>
+      <button class="btn btn-out btn-sm" onclick="goBack()">رجوع</button>
+    </div>
+
+    <!-- اختيار الشركة -->
+    <div class="card">
+      <div class="st">🏢 الشركة <span class="req">*</span></div>
+      <div class="co-grid" id="co-sel"></div>
+    </div>
+
+    <!-- نوع الطلب -->
+    <div class="card">
+      <div class="st">📌 نوع الطلب <span class="req">*</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:0" id="req-type-grid">
+        <div class="co-card" id="rt-new"     onclick="selType('new')">     <div style="font-size:18px;margin-bottom:5px">🆕</div><div style="font-size:12px;font-weight:600">وظيفة جديدة</div></div>
+        <div class="co-card" id="rt-replace" onclick="selType('replace')"> <div style="font-size:18px;margin-bottom:5px">🔄</div><div style="font-size:12px;font-weight:600">استبدال موظف</div></div>
+        <div class="co-card" id="rt-extra"   onclick="selType('extra')">   <div style="font-size:18px;margin-bottom:5px">➕</div><div style="font-size:12px;font-weight:600">زيادة احتياج</div></div>
+        <div class="co-card" id="rt-temp"    onclick="selType('temp')">    <div style="font-size:18px;margin-bottom:5px">⏳</div><div style="font-size:12px;font-weight:600">مؤقت / موسمي</div></div>
+      </div>
+    </div>
+
+    <!-- بيانات الوظيفة -->
+    <div class="card">
+      <div class="st">📄 بيانات الوظيفة</div>
+      <div class="g2">
+        <div class="f"><label>المسمى الوظيفي <span class="req">*</span></label><input id="f-title" placeholder="محاسب أول" oninput="clearAI()"></div>
+        <div class="f"><label>الإدارة / القسم <span class="req">*</span></label><input id="f-dept" placeholder="الإدارة المالية"></div>
+        <div class="f"><label>عدد الشواغر <span class="req">*</span></label><input id="f-count" type="number" min="1" value="1"></div>
+        <div class="f"><label>الراتب المتوقع (ريال)</label><input id="f-salary" placeholder="8,000"></div>
+        <div class="f"><label>موقع العمل</label>
+          <select id="f-location"><option>الرياض</option><option>جدة</option><option>الدمام</option><option>مكة المكرمة</option><option>المدينة المنورة</option><option>أخرى</option></select>
+        </div>
+        <div class="f"><label>تاريخ الحاجة</label><input id="f-date" type="date"></div>
+        <div class="f"><label>المؤهل والخبرة</label>
+          <select id="f-edu"><option>بكالوريوس + 3 سنوات</option><option>بكالوريوس + 5 سنوات</option><option>دبلوم</option><option>ماجستير</option><option>أي مؤهل</option></select>
+        </div>
+        <div class="f"><label>السبب</label>
+          <select id="f-reason"><option>توسع في الأعمال</option><option>استقالة موظف</option><option>زيادة أعباء العمل</option><option>قسم جديد</option><option>نقل داخلي</option></select>
+        </div>
+        <div class="f"><label>هل الوظيفة معتمدة في الميزانية؟</label>
+          <select id="f-budget"><option>نعم — معتمدة</option><option>لا — تحتاج اعتماد</option><option>جزئياً</option></select>
+        </div>
+        <div class="f"><label>هل يوجد وصف وظيفي؟</label>
+          <select id="f-jd"><option>لا — طلب توليد تلقائي</option><option>نعم — سأرفقه</option></select>
+        </div>
+        <div class="f fc"><label>المهام والمسؤوليات الرئيسية</label><textarea id="f-tasks" placeholder="أبرز المهام المطلوبة من شاغل الوظيفة..."></textarea></div>
+        <div class="f fc"><label>أثر عدم التوظيف <span class="req">*</span></label><textarea id="f-impact" placeholder="ما الأثر على العمل في حال التأخير؟"></textarea></div>
+        <div class="f fc"><label>ملاحظات إضافية</label><textarea id="f-notes" placeholder="أي معلومات إضافية..."></textarea></div>
+      </div>
+
+      <!-- AI وصف وظيفي -->
+      <button class="btn btn-blue" id="ai-btn" onclick="genJD()" style="margin-bottom:10px">
+        ✨ توليد الوصف الوظيفي بالذكاء الاصطناعي
+      </button>
+      <div class="ai-box" id="ai-box" style="display:none">
+        <div style="font-size:11px;font-weight:600;color:var(--blue);margin-bottom:6px">✨ وصف وظيفي مقترح</div>
+        <div class="ai-txt" id="ai-txt"></div>
+      </div>
+    </div>
+
+    <!-- بيانات مقدم الطلب -->
+    <div class="card">
+      <div class="st">👤 بيانات مقدم الطلب</div>
+      <div class="g2">
+        <div class="f"><label>الاسم الكامل <span class="req">*</span></label><input id="f-sub" placeholder="الاسم"></div>
+        <div class="f"><label>الجوال</label><input id="f-phone" type="tel" placeholder="05xxxxxxxx"></div>
+        <div class="f fc"><label>الإيميل</label><input id="f-email" type="email" placeholder="name@daamco.sa"></div>
+      </div>
+    </div>
+
+    <div id="form-err" style="display:none;background:var(--red-bg);border:1px solid var(--red-bd);border-radius:7px;padding:10px 13px;font-size:13px;color:var(--red);margin-bottom:11px">
+      ⚠️ يرجى تعبئة الحقول المطلوبة: الشركة، نوع الطلب، المسمى، الإدارة، الأثر، اسمك.
+    </div>
+    <button class="btn btn-gold btn-full" onclick="submitForm()">📨 إرسال الطلب للموارد البشرية</button>
+    <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:7px">سيصل طلبك فوراً لمسؤول الموارد البشرية</p>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="pg" id="pg-ok">
+  <div class="wrap-sm">
+    <div class="suc">
+      <div style="font-size:52px;margin-bottom:14px">📨</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:7px">وصل طلبك بنجاح!</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.7">ستصلك إشعارات بحالة الطلب عبر الإيميل</div>
+      <div style="background:var(--green-bg);border:1px solid var(--green-bd);border-radius:8px;padding:11px 16px;display:inline-block;font-size:13px;color:var(--green);margin-bottom:18px">
+        رقم طلبك: <strong id="ok-id"></strong>
+      </div><br>
+      <button class="btn btn-out" onclick="goTo('role')">🏠 الرئيسية</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL -->
+<div class="pg" id="pg-detail">
+  <div class="wrap-sm">
+    <div class="ph">
+      <div><div class="ph-title" id="det-title">تفاصيل الطلب</div><div class="ph-sub" id="det-sub"></div></div>
+      <button class="btn btn-out btn-sm" onclick="goTo('dash')">رجوع</button>
+    </div>
+    <div class="card">
+      <div class="st">📊 مرحلة الطلب الحالية</div>
+      <div class="stepper" id="det-stepper"></div>
+      <div id="det-status-act" style="margin-top:11px"></div>
+    </div>
+    <div class="card"><div class="st">📄 بيانات الطلب</div><div id="det-body"></div></div>
+    <div class="card" id="det-fin-card" style="display:none">
+      <div class="st">📲 إرسال للإدارة المالية</div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:9px">انسخ الرسالة وأرسلها للمدير المالي عبر واتساب:</p>
+      <div class="wa-box"><div class="wa-msg" id="det-wa-msg"></div></div>
+      <div style="display:flex;gap:8px;margin-top:9px;flex-wrap:wrap">
+        <button class="btn btn-out btn-sm" id="copy-det-wa" onclick="copyDetWA()">📋 نسخ</button>
+        <button class="btn btn-wa btn-sm" onclick="openDetWA()">📲 فتح واتساب</button>
+      </div>
+    </div>
+    <div class="card"><div class="st">🕐 سجل العمليات</div><div class="tl" id="det-tl"></div></div>
+  </div>
+</div>
+
+<!-- FINANCE -->
+<div class="pg" id="pg-fin">
+  <div class="wrap-sm">
+    <div class="ph">
+      <div><div style="font-size:11px;color:var(--muted);margin-bottom:3px">مجموعة دام القابضة</div><div class="ph-title">اعتماد مالي</div></div>
+      <button class="btn btn-out btn-sm" onclick="goTo('role')">رجوع</button>
+    </div>
+    <div id="fin-list"></div>
+  </div>
+</div>
+
+<!-- FIN DETAIL -->
+<div class="pg" id="pg-fin-det">
+  <div class="wrap-sm">
+    <div class="ph">
+      <div><div class="ph-title" id="fd-title">اعتماد الطلب</div></div>
+      <button class="btn btn-out btn-sm" onclick="goTo('fin')">رجوع</button>
+    </div>
+    <div class="card"><div class="st">📄 تفاصيل الطلب</div><div id="fd-body"></div></div>
+    <div class="card">
+      <div class="f" style="margin-bottom:11px"><label>ملاحظات المالية (اختياري)</label><textarea id="fin-notes" placeholder="أي شروط أو ملاحظات..."></textarea></div>
+      <div class="f"><label>اسم المعتمد <span class="req">*</span></label><input id="fin-name" placeholder="الاسم الكامل"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <button class="btn btn-red btn-full" onclick="finDecide(false)">❌ رفض</button>
+      <button class="btn btn-green btn-full" onclick="finDecide(true)">✅ اعتماد</button>
+    </div>
+  </div>
+</div>
+
+<!-- FIN SUCCESS -->
+<div class="pg" id="pg-fin-ok">
+  <div class="wrap-sm">
+    <div class="suc">
+      <div style="font-size:52px;margin-bottom:12px" id="fin-ok-ico">✅</div>
+      <div style="font-size:17px;font-weight:700;margin-bottom:7px" id="fin-ok-ti">تم الاعتماد</div>
+      <div style="font-size:12px;color:var(--muted)" id="fin-ok-su">وصل القرار للموارد البشرية</div>
+      <br><button class="btn btn-out" onclick="goTo('fin')">رجوع</button>
+    </div>
+  </div>
+</div>
+
+<!-- CANDIDATES BANK -->
+<div class="pg" id="pg-candidates">
+  <div class="wrap">
+    <div class="ph">
+      <div><div class="ph-title">بنك المرشحين</div><div class="ph-sub">السير الذاتية المحفوظة</div></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-gold btn-sm" onclick="showAddCandidate()">+ إضافة مرشح</button>
+        <button class="btn btn-out btn-sm" onclick="goTo('dash')">رجوع للداشبورد</button>
+      </div>
+    </div>
+    <div class="card" id="cand-form-card" style="display:none">
+      <div class="st">➕ إضافة مرشح جديد</div>
+      <div class="g3">
+        <div class="f"><label>الاسم الكامل <span class="req">*</span></label><input id="c-name" placeholder="الاسم"></div>
+        <div class="f"><label>الجوال <span class="req">*</span></label><input id="c-phone" placeholder="05xxxxxxxx"></div>
+        <div class="f"><label>الإيميل</label><input id="c-email" type="email" placeholder="email@gmail.com"></div>
+        <div class="f"><label>الجنسية</label><select id="c-nat"><option>سعودي</option><option>غير سعودي</option></select></div>
+        <div class="f"><label>المدينة</label><select id="c-city"><option>الرياض</option><option>جدة</option><option>الدمام</option><option>مكة</option><option>المدينة</option><option>أخرى</option></select></div>
+        <div class="f"><label>المؤهل</label><select id="c-edu"><option>بكالوريوس</option><option>ماجستير</option><option>دبلوم</option><option>دكتوراه</option></select></div>
+        <div class="f"><label>التخصص</label><input id="c-major" placeholder="محاسبة، هندسة..."></div>
+        <div class="f"><label>سنوات الخبرة</label><select id="c-exp"><option>أقل من سنة</option><option>1-3 سنوات</option><option>3-5 سنوات</option><option>5-10 سنوات</option><option>+10 سنوات</option></select></div>
+        <div class="f"><label>الوظيفة المستهدفة</label><input id="c-target" placeholder="محاسب، مهندس..."></div>
+        <div class="f"><label>الشركة المناسبة</label><select id="c-co"><option>أي شركة</option></select></div>
+        <div class="f"><label>مصدر السيرة</label><select id="c-source"><option>لينكدإن</option><option>واتساب</option><option>إحالة</option><option>موقع الشركة</option><option>جهة خارجية</option></select></div>
+        <div class="f"><label>الحالة</label><select id="c-status"><option>جديد</option><option>تحت الدراسة</option><option>مقابلة أولى</option><option>مقابلة نهائية</option><option>عرض وظيفي</option><option>تم التوظيف</option><option>غير مناسب</option><option>احتياط</option></select></div>
+        <div class="f fc"><label>ملاحظات المقابلة</label><textarea id="c-notes" placeholder="ملاحظات..."></textarea></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-gold" onclick="saveCandidate()">حفظ المرشح</button>
+        <button class="btn btn-out" onclick="document.getElementById('cand-form-card').style.display='none'">إلغاء</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="tbl"><table>
+        <thead><tr><th>الاسم</th><th>التخصص</th><th>الخبرة</th><th>الجنسية</th><th>المدينة</th><th>الوظيفة المستهدفة</th><th>الشركة</th><th>الحالة</th><th>المصدر</th></tr></thead>
+        <tbody id="cand-tbody"></tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- WA SEND -->
+<div class="pg" id="pg-wa-send">
+  <div class="wrap-sm">
+    <div class="ph">
+      <div><div class="ph-title">إرسال رابط النموذج</div></div>
+      <button class="btn btn-out btn-sm" onclick="goTo('dash')">رجوع</button>
+    </div>
+    <div class="card">
+      <div class="f" style="margin-bottom:11px">
+        <label>ملاحظة للمدير (اختياري)</label>
+        <input id="wa-note" placeholder="مثال: يرجى التعبئة اليوم قبل الساعة 3" oninput="refreshWA()">
+      </div>
+      <div class="wa-box"><div class="wa-msg" id="wa-preview"></div></div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn btn-out" id="copy-wa-btn" onclick="copyWA()">📋 نسخ الرسالة</button>
+        <button class="btn btn-wa" onclick="openMainWA()">📲 فتح واتساب</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+const COMPANIES=[
+  {id:'daam',    name:'دام القابضة',      icon:'👑',type:'الشركة الأم'},
+  {id:'rasf',    name:'رصف',              icon:'🏗️',type:'مقاولات'},
+  {id:'arabyat', name:'العربات الفاخرة',  icon:'🚗',type:'سيارات فاخرة'},
+  {id:'anawan',  name:'عناوان الضيافة',   icon:'🏨',type:'ضيافة'},
+  {id:'shatiba', name:'شاطبة للمقاولات', icon:'🏚️',type:'مقاولات'},
+  {id:'mrkh',    name:'مرخ للوجبات',      icon:'🍽️',type:'مطاعم'},
+  {id:'maaqid',  name:'معاقد للمقاولات', icon:'🔧',type:'مقاولات'},
+  {id:'manazil', name:'المنازل',          icon:'🏠',type:'عقارات'},
+];
+
+const REQ_TYPES={new:'وظيفة جديدة',replace:'استبدال موظف',extra:'زيادة احتياج',temp:'مؤقت/موسمي'};
+
+const STATUSES=[
+  {id:'received', label:'تم الاستلام',       cls:'b-blue'},
+  {id:'fin_wait', label:'بانتظار المالية',    cls:'b-amber'},
+  {id:'approved', label:'معتمد',              cls:'b-green'},
+  {id:'searching',label:'جاري البحث',         cls:'b-purple'},
+  {id:'shortlist',label:'ترشيح مرشحين',       cls:'b-purple'},
+  {id:'int1',     label:'مقابلة أولى',        cls:'b-purple'},
+  {id:'int2',     label:'مقابلة فنية',        cls:'b-purple'},
+  {id:'offer',    label:'عرض وظيفي',          cls:'b-gold'},
+  {id:'hired',    label:'تم التوظيف',         cls:'b-green'},
+  {id:'closed',   label:'مغلق/مرفوض',        cls:'b-gray'},
+];
+
+const CAND_STATUS_CLS={جديد:'b-blue','تحت الدراسة':'b-amber','مقابلة أولى':'b-purple','مقابلة نهائية':'b-purple','عرض وظيفي':'b-gold','تم التوظيف':'b-green','غير مناسب':'b-gray',احتياط:'b-blue'};
+
+const SK='daam_v2';
+let DB={requests:[],candidates:[]};
+let user=null,role=null,curId=null,filterCo='all';
+let selCo=null,selType=null;
+
+function loadDB(){try{const d=localStorage.getItem(SK);if(d)DB=JSON.parse(d)}catch{}}
+function saveDB(){try{localStorage.setItem(SK,JSON.stringify(DB))}catch{}}
+function v(id){return(document.getElementById(id)||{}).value||''}
+function today(){return new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'short',day:'numeric'})}
+function uid(){return'JR-'+Date.now().toString().slice(-6)}
+function notify(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),2500)}
+function getSt(id){return STATUSES.find(s=>s.id===id)||STATUSES[0]}
+
+function goTo(pg){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  const el=document.getElementById('pg-'+pg);
+  if(el)el.classList.add('on');
+  if(pg==='dash')renderDash();
+  if(pg==='fin')renderFinList();
+  if(pg==='candidates')renderCandidates();
+  if(pg==='wa-send')refreshWA();
+  if(pg==='form'){selCo=null;selType=null;renderCoSel();renderTypeSel();}
+  window.scrollTo(0,0);
+}
+function goBack(){role==='hr'?goTo('dash'):goTo('role')}
+
+// AUTH
+function doLogin(){
+  const e=v('login-email').trim();
+  if(!e){
+    document.getElementById('login-err').style.display='block';
+    document.getElementById('login-err').textContent='⚠️ يرجى إدخال الإيميل للمتابعة';
+    return;
+  }
+  document.getElementById('login-err').style.display='none';
+  user=e;
+  const nm=e.split('@')[0];
+  document.getElementById('nav-av').textContent=nm.charAt(0).toUpperCase();
+  document.getElementById('main-nav').style.display='block';
+  loadDB();
+  goTo('role');
+}
+function logout(){user=null;role=null;document.getElementById('main-nav').style.display='none';goTo('login')}
+
+// ROLE
+function setRole(r){
+  role=r;
+  const lbl={hr:'الموارد البشرية',manager:'مدير الإدارة',finance:'الإدارة المالية'};
+  document.getElementById('nav-role').textContent=lbl[r]||r;
+  if(r==='hr')goTo('dash');
+  else if(r==='manager')goTo('form');
+  else goTo('fin');
+}
+
+// COMPANY SELECTOR
+function renderCoSel(){
+  const w=document.getElementById('co-sel');
+  w.innerHTML=COMPANIES.map(c=>`<div class="co-card" id="co-${c.id}" onclick="pickCo('${c.id}')"><div class="co-ico">${c.icon}</div><div class="co-nm">${c.name}</div><div class="co-tp">${c.type}</div></div>`).join('');
+}
+function pickCo(id){
+  selCo=id;
+  document.querySelectorAll('.co-card').forEach(c=>c.classList.remove('sel'));
+  const el=document.getElementById('co-'+id);if(el)el.classList.add('sel');
+}
+
+// TYPE SELECTOR
+function renderTypeSel(){selType=null;document.querySelectorAll('[id^=rt-]').forEach(e=>e.classList.remove('sel'))}
+function selType(t){
+  selType=t;
+  document.querySelectorAll('[id^=rt-]').forEach(e=>e.classList.remove('sel'));
+  const el=document.getElementById('rt-'+t);if(el)el.classList.add('sel');
+}
+
+// AI JD GENERATOR
+function clearAI(){document.getElementById('ai-box').style.display='none'}
+function genJD(){
+  const title=v('f-title').trim();
+  if(!title){notify('أدخل المسمى الوظيفي أولاً');return}
+  const co=COMPANIES.find(c=>c.id===selCo);
+  const coName=co?co.name:'الشركة';
+  const jdTemplates={
+    default:`المسمى الوظيفي: ${title}\nالشركة: ${coName}\n\nالمهام والمسؤوليات:\n• تنفيذ المهام اليومية المتعلقة بالمسمى الوظيفي بدقة واحترافية\n• التنسيق مع الفرق ذات العلاقة لضمان سير العمل\n• إعداد التقارير الدورية ورفعها للمدير المباشر\n• المشاركة في تطوير الإجراءات وتحسين الكفاءة التشغيلية\n• الالتزام بسياسات وأنظمة الشركة\n\nالمتطلبات:\n• مؤهل علمي مناسب في التخصص ذي الصلة\n• خبرة لا تقل عن 2-3 سنوات في مجال مشابه\n• مهارات تواصل وعمل ضمن فريق\n• إجادة برامج Office\n• يفضل حاملي الجنسية السعودية`,
+  };
+  const words=title.toLowerCase();
+  let jd=jdTemplates.default;
+  if(words.includes('محاسب')||words.includes('مالي')){
+    jd=`المسمى الوظيفي: ${title}\nالشركة: ${coName}\n\nالمهام والمسؤوليات:\n• تسجيل القيود المحاسبية اليومية وإجراء التسويات البنكية\n• إعداد القوائم المالية الشهرية والربع سنوية\n• متابعة الذمم المدينة والدائنة والمطابقة مع الموردين\n• إعداد تقارير ضريبة القيمة المضافة وتقديمها في المواعيد المحددة\n• المشاركة في إعداد الميزانية التقديرية السنوية\n• التنسيق مع المراجعين الخارجيين\n\nالمتطلبات:\n• بكالوريوس محاسبة أو مالية\n• خبرة 3-5 سنوات في بيئة محاسبية\n• إلمام بأنظمة الزكاة والضريبة في المملكة\n• إجادة Excel ويفضل معرفة بـ SAP أو Oracle\n• يفضل حامل شهادة SOCPA\n• سعودي الجنسية (وظيفة مستهدفة للتوطين)`;
+  }else if(words.includes('مهندس')||words.includes('هندس')){
+    jd=`المسمى الوظيفي: ${title}\nالشركة: ${coName}\n\nالمهام والمسؤوليات:\n• الإشراف على تنفيذ المشاريع الهندسية ومتابعة سير الأعمال\n• مراجعة المخططات والمواصفات الفنية والتأكد من الجودة\n• إعداد التقارير اليومية والأسبوعية عن تقدم المشاريع\n• التنسيق مع المقاولين من الباطن وفرق العمل الميدانية\n• الالتزام بمعايير السلامة والجودة المعتمدة\n\nالمتطلبات:\n• بكالوريوس هندسة في التخصص المطلوب\n• خبرة 3-5 سنوات في مشاريع مشابهة\n• عضوية هيئة المهندسين السعوديين ميزة\n• إجادة AutoCAD وبرامج الهندسة\n• يفضل سعودي الجنسية`;
+  }
+  document.getElementById('ai-txt').textContent=jd;
+  document.getElementById('ai-box').style.display='block';
+  notify('✨ تم توليد الوصف الوظيفي');
+  if(!v('f-tasks'))document.getElementById('f-tasks').value=jd;
+}
+
+// SUBMIT FORM
+function submitForm(){
+  if(!selCo||!selType||!v('f-title')||!v('f-dept')||!v('f-impact')||!v('f-sub')){
+    document.getElementById('form-err').style.display='block';return;
+  }
+  document.getElementById('form-err').style.display='none';
+  loadDB();
+  const co=COMPANIES.find(c=>c.id===selCo);
+  const id=uid();
+  const rec={
+    id,coId:selCo,coName:co?.name,coIcon:co?.icon,
+    reqType:selType,reqTypeLabel:REQ_TYPES[selType],
+    status:'received',time:today(),
+    title:v('f-title'),dept:v('f-dept'),count:v('f-count'),salary:v('f-salary'),
+    location:v('f-location'),date:v('f-date'),edu:v('f-edu'),reason:v('f-reason'),
+    budget:v('f-budget'),jd:v('f-jd'),tasks:v('f-tasks'),impact:v('f-impact'),notes:v('f-notes'),
+    sub:v('f-sub'),phone:v('f-phone'),email:v('f-email'),
+    log:[{t:'تم استلام الطلب',s:v('f-sub')+' — '+today(),c:'blue'}]
+  };
+  DB.requests.push(rec);saveDB();
+  document.getElementById('ok-id').textContent=id;
+  goTo('ok');
+}
+
+// DASHBOARD
+function renderDash(){
+  loadDB();
+  document.getElementById('dash-date').textContent=today();
+  const R=DB.requests,C=DB.candidates||[];
+  const pending=R.filter(r=>['received','fin_wait'].includes(r.status)).length;
+  const prog=R.filter(r=>['approved','searching','shortlist','int1','int2','offer'].includes(r.status)).length;
+  document.getElementById('s0').textContent=R.length;
+  document.getElementById('s1').textContent=pending;
+  document.getElementById('s2').textContent=prog;
+  document.getElementById('s3').textContent=R.filter(r=>r.status==='hired').length;
+  document.getElementById('s4').textContent=R.filter(r=>r.status==='closed').length;
+  document.getElementById('s5').textContent=C.length;
+
+  document.getElementById('co-stat-grid').innerHTML=COMPANIES.map(c=>{
+    const n=R.filter(r=>r.coId===c.id).length;
+    return`<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 10px;display:flex;align-items:center;gap:8px;cursor:pointer" onclick="filterDash('${c.id}')">
+      <span style="font-size:16px">${c.icon}</span>
+      <div><div style="font-size:11px;font-weight:600">${c.name}</div><div style="font-size:10px;color:var(--muted)">${n} طلب</div></div>
+    </div>`;
+  }).join('');
+
+  const filt=document.getElementById('dash-filters');
+  filt.innerHTML=`<button class="fb ${filterCo==='all'?'on':''}" onclick="filterDash('all')">الكل</button>`+
+    COMPANIES.filter(c=>R.some(r=>r.coId===c.id)).map(c=>`<button class="fb ${filterCo===c.id?'on':''}" onclick="filterDash('${c.id}')">${c.icon} ${c.name}</button>`).join('');
+
+  const rows=filterCo==='all'?R:R.filter(r=>r.coId===filterCo);
+  const tbody=document.getElementById('req-tbody');
+  if(!rows.length){tbody.innerHTML=`<tr><td colspan="8"><div class="empty">📂 لا توجد طلبات بعد</div></td></tr>`;return;}
+  tbody.innerHTML=[...rows].reverse().map(r=>{
+    const st=getSt(r.status);
+    return`<tr>
+      <td style="font-family:monospace;font-size:10px;color:var(--muted)">${r.id}</td>
+      <td style="font-weight:500">${r.title}</td>
+      <td>${r.coIcon} ${r.coName}</td>
+      <td style="color:var(--muted)">${r.dept}</td>
+      <td><span style="font-size:10px;color:var(--muted)">${r.reqTypeLabel||'—'}</span></td>
+      <td><span class="badge ${st.cls}">${st.label}</span></td>
+      <td style="font-size:10px;color:var(--muted)">${r.time}</td>
+      <td><div style="display:flex;gap:5px;flex-wrap:wrap">
+        <button class="btn btn-out btn-sm" onclick="openDetail('${r.id}')">👁 عرض</button>
+        ${r.status==='received'?`<button class="btn btn-wa btn-sm" onclick="openDetail('${r.id}')">💰 للمالية</button>`:''}
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function filterDash(co){filterCo=co;renderDash()}
+
+// DETAIL
+function openDetail(id){
+  loadDB();const r=DB.requests.find(x=>x.id===id);if(!r)return;curId=id;
+  document.getElementById('det-title').textContent=r.title;
+  document.getElementById('det-sub').textContent=r.id+' | '+r.coIcon+' '+r.coName+' | '+r.dept;
+
+  const stIds=STATUSES.map(s=>s.id);
+  const ci=stIds.indexOf(r.status);
+  document.getElementById('det-stepper').innerHTML=STATUSES.map((s,i)=>{
+    const cls=i<ci?'stp done':i===ci?'stp cur':'stp';
+    return`<div class="${cls}"><div class="stp-d">${i<ci?'✓':i+1}</div><div class="stp-l">${s.label}</div></div>`;
+  }).join('');
+
+  if(role==='hr'){
+    const nxt=STATUSES.filter((_,i)=>i>ci);
+    document.getElementById('det-status-act').innerHTML=nxt.length?`<div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center"><span style="font-size:11px;color:var(--muted)">تحديث الحالة:</span>${nxt.slice(0,4).map(s=>`<button class="btn btn-out btn-sm" onclick="chSt('${r.id}','${s.id}')">${s.label}</button>`).join('')}</div>`:'';
+  }else{document.getElementById('det-status-act').innerHTML=''}
+
+  const rows=[
+    ['الشركة',r.coIcon+' '+r.coName],['الإدارة',r.dept],['المسمى',r.title],
+    ['نوع الطلب',r.reqTypeLabel||'—'],['الشواغر',r.count],['الراتب',r.salary||'—'],
+    ['موقع العمل',r.location||'—'],['تاريخ الحاجة',r.date||'—'],
+    ['المؤهل',r.edu],['السبب',r.reason],['في الميزانية',r.budget],
+    ['المهام',r.tasks||'—'],['الأثر',r.impact],['ملاحظات',r.notes||'—'],
+    ['مقدم الطلب',r.sub],['الجوال',r.phone||'—'],['الإيميل',r.email||'—'],['التاريخ',r.time],
+    ...(r.finName?[['اعتماد المالية',r.finName],['ملاحظات المالية',r.finNotes||'—']]:[]
+    )];
+  document.getElementById('det-body').innerHTML=rows.map(([l,val])=>`<div class="dr"><span class="dl">${l}</span><span class="dv">${val||'—'}</span></div>`).join('');
+
+  const fc=document.getElementById('det-fin-card');
+  if(r.status==='received'&&role==='hr'){
+    fc.style.display='block';
+    document.getElementById('det-wa-msg').textContent=buildFinMsg(r);
+  }else{fc.style.display='none'}
+
+  document.getElementById('det-tl').innerHTML=(r.log||[]).map(l=>`<div class="tl-row"><div class="tl-dot" style="background:var(--${l.c||'blue'}-bg);color:var(--${l.c||'blue'})">✓</div><div class="tl-body"><div class="tl-ti">${l.t}</div><div class="tl-su">${l.s}</div></div></div>`).join('');
+  goTo('detail');
+}
+
+function chSt(id,ns){
+  loadDB();const r=DB.requests.find(x=>x.id===id);if(!r)return;
+  const st=getSt(ns);r.status=ns;
+  r.log.push({t:'تحديث: '+st.label,s:'الموارد البشرية — '+today(),c:'blue'});
+  if(ns==='fin_wait')r.log.push({t:'أُرسل للإدارة المالية',s:'الموارد البشرية — '+today(),c:'amber'});
+  saveDB();notify('تم تحديث: '+st.label);openDetail(id);
+}
+
+function buildFinMsg(r){
+  return`مرحباً،\n\nيرجى مراجعة واعتماد طلب الاحتياج الوظيفي:\n\nالوظيفة: ${r.title}\nالشركة: ${r.coName}\nالإدارة: ${r.dept}\nعدد الشواغر: ${r.count}\nالراتب: ${r.salary||'—'}\nفي الميزانية: ${r.budget}\n\nالرقم المرجعي: ${r.id}\nمقدم الطلب: ${r.sub}\n\nافتح المنصة واختر "الإدارة المالية" ثم ابحث عن رقم الطلب.\n\nشكراً،\nالموارد البشرية — دام القابضة`;
+}
+function copyDetWA(){
+  navigator.clipboard.writeText(document.getElementById('det-wa-msg').textContent).catch(()=>{});
+  document.getElementById('copy-det-wa').textContent='✓ تم النسخ';
+  setTimeout(()=>{document.getElementById('copy-det-wa').textContent='📋 نسخ'},2000);
+  notify('تم النسخ');
+}
+function openDetWA(){
+  window.open('https://wa.me/?text='+encodeURIComponent(document.getElementById('det-wa-msg').textContent),'_blank');
+  loadDB();const r=DB.requests.find(x=>x.id===curId);
+  if(r&&r.status==='received'){r.status='fin_wait';r.log.push({t:'أُرسل للإدارة المالية',s:'الموارد البشرية — '+today(),c:'amber'});saveDB();}
+}
+
+// FINANCE
+function renderFinList(){
+  loadDB();
+  const pend=DB.requests.filter(r=>['fin_wait','received'].includes(r.status));
+  const done=DB.requests.filter(r=>['approved','closed'].includes(r.status));
+  let html='';
+  if(!pend.length&&!done.length){html=`<div class="card"><div class="empty">📂 لا توجد طلبات</div></div>`}
+  else{
+    if(pend.length){
+      html+=`<div class="card"><div class="st">⏳ بانتظار الاعتماد (${pend.length})</div>`+
+      pend.map(r=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);gap:8px;flex-wrap:wrap">
+        <div><div style="font-weight:500;font-size:13px">${r.coIcon} ${r.title}</div><div style="font-size:11px;color:var(--muted)">${r.coName} — ${r.dept} — ${r.count} شاغر — ${r.time}</div></div>
+        <button class="btn btn-gold btn-sm" onclick="openFinDet('${r.id}')">مراجعة واعتماد</button>
+      </div>`).join('')+'</div>';
+    }
+    if(done.length){
+      html+=`<div class="card"><div class="st">✅ تم البت بها (${done.length})</div>`+
+      done.map(r=>{const st=getSt(r.status);return`<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+        <span style="font-size:12px">${r.coIcon} ${r.title} <span style="color:var(--muted);font-size:10px">— ${r.coName}</span></span>
+        <span class="badge ${st.cls}">${st.label}</span>
+      </div>`}).join('')+'</div>';
+    }
+  }
+  document.getElementById('fin-list').innerHTML=html;
+}
+
+function openFinDet(id){
+  loadDB();const r=DB.requests.find(x=>x.id===id);if(!r)return;curId=id;
+  document.getElementById('fd-title').textContent=r.coIcon+' '+r.title;
+  const rows=[['الشركة',r.coIcon+' '+r.coName],['الإدارة',r.dept],['المسمى',r.title],['نوع الطلب',r.reqTypeLabel],['الشواغر',r.count],['الراتب',r.salary||'—'],['موقع العمل',r.location||'—'],['في الميزانية',r.budget],['المؤهل',r.edu],['السبب',r.reason],['الأثر',r.impact],['مقدم الطلب',r.sub]];
+  document.getElementById('fd-body').innerHTML=rows.map(([l,val])=>`<div class="dr"><span class="dl">${l}</span><span class="dv">${val||'—'}</span></div>`).join('');
+  document.getElementById('fin-name').value='';document.getElementById('fin-notes').value='';
+  goTo('fin-det');
+}
+function finDecide(ok){
+  const nm=v('fin-name').trim();if(!nm){notify('يرجى كتابة اسم المعتمد');return}
+  loadDB();const r=DB.requests.find(x=>x.id===curId);
+  if(r){r.status=ok?'approved':'closed';r.finName=nm;r.finNotes=v('fin-notes');r.finTime=today();r.log.push({t:'قرار المالية: '+(ok?'معتمد':'مرفوض'),s:nm+' — '+today(),c:ok?'green':'red'});saveDB()}
+  document.getElementById('fin-ok-ico').textContent=ok?'✅':'❌';
+  document.getElementById('fin-ok-ti').textContent=ok?'تم الاعتماد':'تم الرفض';
+  document.getElementById('fin-ok-su').textContent=ok?'وصل القرار للموارد البشرية.':'تم إبلاغ الموارد البشرية بالرفض.';
+  goTo('fin-ok');
+}
+
+// CANDIDATES
+function renderCandidates(){
+  loadDB();
+  const C=DB.candidates||[];
+  // fill company dropdown
+  const sel=document.getElementById('c-co');
+  sel.innerHTML='<option>أي شركة</option>'+COMPANIES.map(c=>`<option>${c.name}</option>`).join('');
+  const tbody=document.getElementById('cand-tbody');
+  if(!C.length){tbody.innerHTML=`<tr><td colspan="9"><div class="empty">لا يوجد مرشحون بعد</div></td></tr>`;return}
+  tbody.innerHTML=[...C].reverse().map(c=>`<tr>
+    <td style="font-weight:500">${c.name}</td>
+    <td>${c.major||'—'}</td>
+    <td>${c.exp||'—'}</td>
+    <td>${c.nat||'—'}</td>
+    <td>${c.city||'—'}</td>
+    <td>${c.target||'—'}</td>
+    <td>${c.co||'—'}</td>
+    <td><span class="badge ${CAND_STATUS_CLS[c.status]||'b-gray'}">${c.status}</span></td>
+    <td>${c.source||'—'}</td>
+  </tr>`).join('');
+}
+function showAddCandidate(){
+  const card=document.getElementById('cand-form-card');
+  card.style.display=card.style.display==='none'?'block':'none';
+}
+function saveCandidate(){
+  if(!v('c-name')||!v('c-phone')){notify('يرجى إدخال الاسم والجوال');return}
+  loadDB();
+  if(!DB.candidates)DB.candidates=[];
+  DB.candidates.push({name:v('c-name'),phone:v('c-phone'),email:v('c-email'),nat:v('c-nat'),city:v('c-city'),edu:v('c-edu'),major:v('c-major'),exp:v('c-exp'),target:v('c-target'),co:v('c-co'),source:v('c-source'),status:v('c-status'),notes:v('c-notes'),added:today()});
+  saveDB();notify('✅ تم حفظ المرشح');
+  document.getElementById('cand-form-card').style.display='none';
+  ['c-name','c-phone','c-email','c-major','c-target','c-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
+  renderCandidates();
+}
+
+// WA SEND
+function refreshWA(){
+  const note=v('wa-note');
+  const link=window.location.href;
+  document.getElementById('wa-preview').textContent=
+    'مرحباً،\n\nيرجى تعبئة نموذج طلب الاحتياج الوظيفي لمجموعة دام القابضة:\n\n'+link+
+    '\n\nخطوات الدخول:\n١. أدخل إيميل الشركة (@daamco.sa)\n٢. اختر "مدير الإدارة"\n٣. اختر شركتك ونوع الطلب وعبّئ البيانات'+
+    (note?'\n\nملاحظة: '+note:'')+
+    '\n\nشكراً،\nإدارة الموارد البشرية\nمجموعة دام القابضة';
+}
+function copyWA(){
+  navigator.clipboard.writeText(document.getElementById('wa-preview').textContent).catch(()=>{});
+  document.getElementById('copy-wa-btn').textContent='✓ تم النسخ';
+  setTimeout(()=>{document.getElementById('copy-wa-btn').textContent='📋 نسخ الرسالة'},2000);
+  notify('تم النسخ');
+}
+function openMainWA(){window.open('https://wa.me/?text='+encodeURIComponent(document.getElementById('wa-preview').textContent),'_blank')}
+
+// ===== تشغيل فوري =====
+window.onload = function() {
+  var btn = document.getElementById('login-btn');
+  if(btn){ btn.onclick = function(){ doLogin(); return false; }; }
+  var inp = document.getElementById('login-email');
+  if(inp){ inp.onkeypress = function(e){ if((e.key||e.keyCode)==='Enter'||e.keyCode===13){ doLogin(); return false; } }; }
+};
+</script>
+</body>
+</html>
